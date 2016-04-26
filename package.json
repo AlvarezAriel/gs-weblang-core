@@ -1,0 +1,36 @@
+{
+  "name": "gs-weblang-core",
+  "version": "0.0.0",
+  "description": "My splendid module",
+  "license": "MIT",
+  "repository": "AlvarezAriel/gs-weblang-core",
+  "author": {
+    "name": "ariel",
+    "email": "alvarez.ariel.work@gmail.com",
+    "url": "gobstones.github.io"
+  },
+  "bin": "cli.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "xo && nyc ava"
+  },
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    ""
+  ],
+  "dependencies": {
+    "meow": "^3.7.0"
+  },
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "xo": "^0.14.0",
+    "nyc": "^6.4.0"
+  }
+}
