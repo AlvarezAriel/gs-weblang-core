@@ -1,13 +1,13 @@
 {
   "name": "gs-weblang-core",
   "version": "0.0.0",
-  "description": "My splendid module",
+  "description": "Gobstones parser and interpreter",
   "license": "MIT",
-  "repository": "AlvarezAriel/gs-weblang-core",
+  "repository": "gobstones/gs-weblang-core",
   "author": {
     "name": "ariel",
     "email": "alvarez.ariel.work@gmail.com",
-    "url": "gobstones.github.io"
+    "url": "gobstones.github.io/gs-weblang-core"
   },
   "bin": "cli.js",
   "engines": {
@@ -32,5 +32,8 @@
     "ava": "^0.14.0",
     "xo": "^0.14.0",
     "nyc": "^6.4.0"
+  },
+  "xo":{
+    "space":4
   }
 }
