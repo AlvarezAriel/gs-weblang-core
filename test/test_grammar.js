@@ -2,11 +2,12 @@ var test = require('ava');
 var grammar = require('../lib/grammar');
 var Parser = require('../lib/parser');
 var Lexer = require('../lib/lexer');
+var Names = require('../lib/gobstones-tokens-en');
 
 var g;
 
 test.beforeEach(function () {
-    g = grammar(Parser, new Lexer());
+    g = grammar(Parser, new Lexer(), Names);
 });
 
 test('Parser recognizes number literals', function (t) {
@@ -16,6 +17,6 @@ test('Parser recognizes number literals', function (t) {
 });
 
 test('Parser recognizes functions', function (t) {
-    var ast = g.parse("function addition(){}");
+    var ast = g.parse("procedure addition(){}");
     t.is(ast.arity, 'routine');
 });
