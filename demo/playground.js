@@ -8,9 +8,10 @@ var Context = require('../lib/execution-context');
 var g = grammar(Parser, new Lexer(), Names, behaviors);
 // console.log(g.parseExpression("6+2*3").eval());
 var context = new Context();
-var programm = g.parse("x := 1 x := x + 1");
+var programm = g.parse("procedure Sarlompa(){}");
 for (var i = 0; i < programm.length; i++) {
     programm[i].interpret(context);
 }
+console.log(g.parse("procedure Sarlompa(x,y){  z := x + y  }"));
 console.log(context.all());
 
