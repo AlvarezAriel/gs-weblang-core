@@ -6,12 +6,32 @@ var behaviors = require('../lib/interpreter');
 var Context = require('../lib/execution-context');
 
 var g = grammar(Parser, new Lexer(), Names, behaviors);
-// console.log(g.parseExpression("6+2*3").eval());
 var context = new Context();
-var programm = g.parse("procedure Sarlompa(){}");
-for (var i = 0; i < programm.length; i++) {
-    programm[i].interpret(context);
+context.init();
+var program = g.parse("" +
+    "Poner(Rojo) " +
+    "Mover(Norte) " +
+    "Poner(Azul) " +
+    "Mover(Este) " +
+    "Poner(Rojo) " +
+    "if (hayBolitas(Rojo)){" +
+    "    Mover(Norte)" +
+    "    Poner(Azul)" +
+    "} else {" +
+    "    Mover(Este)" +
+    "    Poner(Verde)" +
+    "}" +
+    "x := hayBolitas(Rojo)");
+console.log("******************* CONTEXT *****************************");
+console.log(context);
+console.log("******************* PROGRAM *****************************");
+console.log(program);
+console.log("----------------------------------------------------");
+for (var i = 0; i < program.length; i++) {
+    program[i].interpret(context);
 }
-console.log(g.parse("procedure Sarlompa(x,y){  z := x + y  }"));
+console.log("==================== RESULTS ========================");
 console.log(context.all());
+console.log("===================================================");
+console.log(context.board().printAscii());
 
