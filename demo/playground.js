@@ -9,15 +9,22 @@ var g = grammar(Parser, new Lexer(), Names, behaviors);
 var context = new Context();
 context.init();
 var program = g.parse("" +
+    "procedure Sarasa(dir){" +
+    "    Poner(Rojo)" +
+    "    Poner(Rojo)" +
+    "}" +
     "Poner(Rojo) " +
     "Mover(Norte) " +
     "Poner(Azul) " +
     "Mover(Este) " +
-    "Poner(Rojo) " +
+    "Sarasa(Norte) " +
     "if (hayBolitas(Rojo)){" +
+    "    Mover(Norte)" +
     "    Mover(Norte)" +
     "    Poner(Azul)" +
     "} else {" +
+    "    Mover(Este)" +
+    "    Mover(Este)" +
     "    Mover(Este)" +
     "    Poner(Verde)" +
     "}" +
