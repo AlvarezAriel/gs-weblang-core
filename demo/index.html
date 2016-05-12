@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Editor</title>
+    <style type="text/css" media="screen">
+        body, html, #container {
+            margin: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        #editor {
+            margin: 0;
+            height: 100%;
+            flex: 3 0px;
+        }
+
+        #container {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        #container > * {
+            padding: 10px;
+            flex: 1 100%;
+        }
+
+        #tree {
+            background-color: #e2e2e2;
+            order: 1;
+        }
+
+        #result {
+            margin-top: 5px;
+            background-color: white;
+            overflow: scroll;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+<pre id="editor">
+program {
+    Poner(Rojo)
+}
+</pre>
+    <section id="tree">
+        <button id="run" onclick="runParser();">Run</button>
+    <pre id="result">
+
+    </pre>
+    </section>
+</div>
+
+<script src="src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/gobstones-tokens-en.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/execution-context.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/model.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/lexer.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/grammar.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/parser.js" type="text/javascript" charset="utf-8"></script>
+<script src="./lib/interpreter.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/chrome");
+    editor.session.setMode("ace/mode/gobstones");
+    editor.getSession().setTabSize(4);
+    editor.setHighlightActiveLine(false);
+
+    (function () {
+
+        function go(source) {
+            var g = grammar(Parser, new Lexer(), TOKEN_NAMES, behaviours);
+            editor.getSession().clearAnnotations();
+
+            var context = new Context();
+            context.init();
+            try {
+                var program = g.parse(source);
+                console.log(source);
+                console.log(program);
+                try {
+                    for (var i = 0; i < program.length; i++) {
+                        program[i].interpret(context);
+                    }
+                } catch (e) {
+                    console.log("INTERPRETER ERROR: ", e);
+                }
+
+                var string = context.board().printAscii();
+                document.getElementById('result').innerHTML = string
+                    .replace(/&/g, '&amp;')
+                    .replace(/[<]/g, '&lt;');
+            } catch (e) {
+                if(e){
+                    console.log("CATCHED PARSER ERROR: ", e);
+                    editor.getSession().setAnnotations([{
+                        row: e.on.row,
+                        column: 0,
+                        text: e.error,
+                        type: "error" // also warning and information
+                    }]);
+                }
+            }
+        }
+
+        editor.on("input", function () {
+            go(editor.getValue());
+        });
+    }());
+
+
+</script>
+
+</body>
+</html>
